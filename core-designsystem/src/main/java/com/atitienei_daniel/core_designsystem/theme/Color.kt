@@ -1,4 +1,4 @@
-package com.atitienei_daniel.trasor.ui.theme
+package com.atitienei_daniel.core_designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
