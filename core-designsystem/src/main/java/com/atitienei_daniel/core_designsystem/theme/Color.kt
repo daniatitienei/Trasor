@@ -1,4 +1,4 @@
-package com.atitienei_daniel.trasor.ui.theme
+package com.atitienei_daniel.core_designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -13,3 +13,4 @@ val Pink40 = Color(0xFF7D5260)
 val Black40 = Color(0xFF212121)
 val DarkGray40 = Color(0xFF4B4949)
 val Gray40 = Color(0xFF5A5757)
+val LightGray40 = Color(0xFFF3F3F3)
