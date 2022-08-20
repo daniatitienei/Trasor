@@ -50,6 +50,7 @@ android {
 dependencies {
 
     implementation(project(":core-designsystem"))
+    implementation(project(":feature-games"))
 
     /* Dagger Hilt */
     implementation("com.google.dagger:hilt-android:2.42")
@@ -62,9 +63,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version"
 
-    /* Material Icons */
-    implementation("androidx.compose.material:material-icons-extended:$compose_version")
-
     /* Moshi */
     implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
 
@@ -73,9 +71,6 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation("androidx.room:room-ktx:$room_version")
-
-    /* Google fonts */
-    implementation "androidx.compose.ui:ui-text-google-fonts:1.3.0-alpha03"
 
     implementation "androidx.compose.ui:ui:1.2.1"
     implementation "androidx.compose.ui:ui-tooling-preview:1.2.1"

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="latest_game">Latest game</string>
+    <string name="new_game">New game</string>
+    <string name="unfinished_games">Unfinished games</string>
+</resources>

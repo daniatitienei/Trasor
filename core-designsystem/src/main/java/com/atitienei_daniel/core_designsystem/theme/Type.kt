@@ -22,7 +22,6 @@ private val fontFamily = FontFamily(
     Font(googleFont = GoogleFont("Source Code Pro"), fontProvider = provider)
 )
 
-// Set of Material typography styles to start with
 val Typography = Typography(
     displayLarge = TextStyle(
         fontWeight = FontWeight.W400,

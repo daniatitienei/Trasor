@@ -16,3 +16,5 @@ rootProject.name = "Trasor"
 include ':app'
 include ':feature-games'
 include ':core-designsystem'
+include ':core-ui'
+include ':core-model'

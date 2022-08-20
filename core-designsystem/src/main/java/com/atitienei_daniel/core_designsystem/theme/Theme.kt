@@ -17,7 +17,10 @@ import androidx.core.view.ViewCompat
 private val LightColorScheme = lightColorScheme(
     primary = DarkGray40,
     secondary = Gray40,
-    onBackground = Black40
+    onBackground = Black40,
+    surface = LightGray40,
+    primaryContainer = LightGray40,
+    surfaceVariant = LightGray40
 )
 
 @Composable
