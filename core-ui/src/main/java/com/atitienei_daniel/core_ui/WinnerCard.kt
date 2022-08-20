@@ -22,7 +22,9 @@ import com.atitienei_daniel.core_model.previewPlayer
 
 @Composable
 fun WinnerCard(player: Player) {
-    Card {
+    Card(
+        onClick = { /*TODO*/ }
+    ) {
         Text(
             text = stringResource(id = R.string.winner) + " \uD83D\uDC51",
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="game_name">Game name</string>
+    <string name="game_name_placeholder">ex: Cards</string>
+    <string name="players">Players</string>
+    <string name="add_player">Add player</string>
+    <string name="new_game">New game</string>
+    <string name="player">Player</string>
+    <string name="player_name_placeholder">ex: Alex</string>
+    <string name="color">Color</string>
+    <string name="done">Done</string>
+</resources>
