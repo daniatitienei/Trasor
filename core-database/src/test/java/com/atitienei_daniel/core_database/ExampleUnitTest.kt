@@ -1,4 +1,4 @@
-package com.atitienei_daniel.core_model
+package com.atitienei_daniel.core_database
 
 import org.junit.Test
 
