@@ -3,6 +3,7 @@ package com.atitienei_daniel.core_model
 import androidx.compose.ui.graphics.Color
 
 data class Game(
+    val id: Int = 0,
     val name: String = "",
     val players: List<Player> = emptyList(),
     val finished: Boolean = false,

@@ -30,7 +30,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.atitienei_daniel.core_designsystem.theme.TrasorTheme
@@ -42,6 +46,8 @@ fun NewGameDestination() {
 
 @Composable
 fun NewGameScreen() {
+
+    val context = LocalContext.current
 
     val modalBottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Expanded)
@@ -143,7 +149,12 @@ fun NewGameScreen() {
         ) { innerPadding ->
             LazyColumn(
                 modifier = Modifier.padding(innerPadding),
-                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 15.dp),
+                contentPadding = PaddingValues(
+                    start = 20.dp,
+                    end = 20.dp,
+                    top = 15.dp,
+                    bottom = innerPadding.calculateTopPadding() + 15.dp
+                ),
                 verticalArrangement = Arrangement.spacedBy(15.dp)
             ) {
                 item {
@@ -162,7 +173,29 @@ fun NewGameScreen() {
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
-
+                item {
+                    Text(
+                        text = buildAnnotatedString {
+                            withStyle(style = MaterialTheme.typography.titleLarge.toSpanStyle()) {
+                                append(context.getString(R.string.max_points))
+                            }
+                            withStyle(style = MaterialTheme.typography.bodyLarge.toSpanStyle()) {
+                                append("(${context.getString(R.string.optional)})")
+                            }
+                        },
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = "",
+                        onValueChange = {},
+                        placeholder = {
+                            Text(text = stringResource(R.string.max_points_placeholder))
+                        },
+                        shape = RoundedCornerShape(corner = CornerSize(10.dp)),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
                 item {
                     Text(
                         text = stringResource(R.string.players),

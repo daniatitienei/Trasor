@@ -10,4 +10,7 @@
     <string name="color">Color</string>
     <string name="player_name">Player name</string>
     <string name="done">Done</string>
+    <string name="max_points">Max points</string>
+    <string name="optional">optional</string>
+    <string name="max_points_placeholder">ex: 13</string>
 </resources>
