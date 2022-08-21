@@ -17,7 +17,7 @@
             <option value="$PROJECT_DIR$/core-model" />
             <option value="$PROJECT_DIR$/core-ui" />
             <option value="$PROJECT_DIR$/feature-games" />
-            <option value="$PROJECT_DIR$/new-game" />
+            <option value="$PROJECT_DIR$/feature-new-game" />
           </set>
         </option>
       </GradleProjectSettings>

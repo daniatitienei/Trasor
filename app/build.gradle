@@ -51,7 +51,7 @@ dependencies {
 
     implementation(project(":core-designsystem"))
     implementation(project(":feature-games"))
-    implementation(project(":new-game"))
+    implementation implementation(project(':feature-new-game',))
 
     def nav_version = "2.5.1"
 

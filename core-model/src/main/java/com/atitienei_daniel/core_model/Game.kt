@@ -16,17 +16,14 @@ val previewGame = Game(
         Player(
             name = "Dani",
             score = 13,
-            color = Color.Green
         ),
         Player(
             name = "Hubuca",
             score = 8,
-            color = Color.Magenta
         ),
         Player(
             name = "Vane",
             score = 3,
-            color = Color.Yellow
         )
     )
 )

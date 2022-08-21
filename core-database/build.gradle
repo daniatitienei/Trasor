@@ -36,7 +36,6 @@ dependencies {
 
     implementation(project(":core-model"))
 
-
     def room_version = "2.4.3"
 
     implementation "androidx.room:room-runtime:$room_version"
@@ -48,6 +47,8 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.42")
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
     kapt "androidx.hilt:hilt-compiler:1.0.0"
+
+    implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'

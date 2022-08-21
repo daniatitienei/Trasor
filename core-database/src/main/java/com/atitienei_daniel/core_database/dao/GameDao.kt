@@ -1,7 +1,6 @@
 package com.atitienei_daniel.core_database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -12,23 +11,28 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface GameDao {
 
-    @Query("SELECT * FROM game")
+    @Query("SELECT * FROM GAME")
     fun getGamesEntitiesStream(): Flow<List<GameEntity>>
 
     @Query(
         """
-        SELECT * FROM game
+        SELECT * FROM GAME
         WHERE id = :gameId
     """
     )
     fun getGameEntityStream(gameId: Int): Flow<GameEntity>
 
-    @Insert
-    suspend fun insertGame(gameEntity: GameEntity)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertOrIgnoreGame(gameEntity: GameEntity)
 
     @Update
     suspend fun updateGame(gameEntity: GameEntity)
 
-    @Delete
+    @Query(
+        value = """
+            DELETE FROM GAME
+            WHERE id in (:gameId)
+        """
+    )
     suspend fun deleteGame(gameId: Int)
 }
