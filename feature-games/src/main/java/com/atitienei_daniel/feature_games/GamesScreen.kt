@@ -27,17 +27,22 @@ import com.atitienei_daniel.core_model.previewPlayer
 import com.atitienei_daniel.core_ui.WinnerCard
 
 @Composable
-fun GamesDestination(viewModel: GamesViewModel = hiltViewModel()) {
+fun GamesRoute(
+    viewModel: GamesViewModel = hiltViewModel(),
+    navigateToNewGame: () -> Unit
+) {
     val games by viewModel.games.collectAsStateWithLifecycle(initialValue = emptyList())
 
     GamesScreen(
-        games = games
+        games = games,
+        navigateToNewGame = navigateToNewGame
     )
 }
 
 @Composable
 fun GamesScreen(
-    games: List<Game>
+    games: List<Game>,
+    navigateToNewGame: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -55,7 +60,8 @@ fun GamesScreen(
                 icon = {
                     Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
                 },
-                onClick = { /*TODO*/ })
+                onClick = navigateToNewGame
+            )
         }
     ) { innerPadding ->
         LazyColumn(
@@ -92,6 +98,6 @@ fun GamesScreen(
 @Composable
 private fun GamesScreenPreview() {
     TrasorTheme {
-        GamesScreen(games = listOf(previewGame))
+        GamesScreen(games = listOf(previewGame), navigateToNewGame = {})
     }
 }
