@@ -1,30 +1,49 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@file:OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class,
+    ExperimentalLifecycleComposeApi::class
+)
 
 package com.atitienei_daniel.feature_games
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.atitienei_daniel.core_designsystem.theme.TrasorTheme
-import com.atitienei_daniel.core_model.Player
+import com.atitienei_daniel.core_model.Game
 import com.atitienei_daniel.core_model.previewGame
+import com.atitienei_daniel.core_model.previewPlayer
 import com.atitienei_daniel.core_ui.WinnerCard
 
 @Composable
-fun GamesScreen() {
-    GamesScreenContent()
+fun GamesRoute(
+    viewModel: GamesViewModel = hiltViewModel(),
+    navigateToNewGame: () -> Unit
+) {
+    val games by viewModel.games.collectAsStateWithLifecycle(initialValue = emptyList())
+
+    GamesScreen(
+        games = games,
+        navigateToNewGame = navigateToNewGame
+    )
 }
 
 @Composable
-fun GamesScreenContent() {
+fun GamesScreen(
+    games: List<Game>,
+    navigateToNewGame: () -> Unit
+) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -41,7 +60,8 @@ fun GamesScreenContent() {
                 icon = {
                     Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
                 },
-                onClick = { /*TODO*/ })
+                onClick = navigateToNewGame
+            )
         }
     ) { innerPadding ->
         LazyColumn(
@@ -57,11 +77,7 @@ fun GamesScreenContent() {
             }
             item {
                 WinnerCard(
-                    player = Player(
-                        name = "Dani",
-                        color = Color.Green,
-                        score = 13
-                    )
+                    player = previewPlayer
                 )
             }
             item {
@@ -71,8 +87,8 @@ fun GamesScreenContent() {
                     style = MaterialTheme.typography.titleLarge
                 )
             }
-            item {
-                UnfinishedGameCard(game = previewGame)
+            items(games) {
+                UnfinishedGameCard(game = it)
             }
         }
     }
@@ -80,8 +96,8 @@ fun GamesScreenContent() {
 
 @Preview
 @Composable
-private fun GamesScreenContentPreview() {
+private fun GamesScreenPreview() {
     TrasorTheme {
-        GamesScreenContent()
+        GamesScreen(games = listOf(previewGame), navigateToNewGame = {})
     }
 }

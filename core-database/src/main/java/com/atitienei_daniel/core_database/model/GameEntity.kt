@@ -1,5 +1,6 @@
 package com.atitienei_daniel.core_database.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.atitienei_daniel.core_model.Game

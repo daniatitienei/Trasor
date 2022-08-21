@@ -33,14 +33,6 @@ fun WinnerCard(player: Player) {
             headlineText = {
                 Text(text = player.name)
             },
-            leadingContent = {
-                Box(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clip(CircleShape)
-                        .background(player.color)
-                )
-            },
             trailingContent = {
                 Text(text = "${player.score} points", style = MaterialTheme.typography.titleMedium)
             },

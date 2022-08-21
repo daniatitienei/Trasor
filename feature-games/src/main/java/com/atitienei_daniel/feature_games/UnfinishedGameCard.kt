@@ -42,14 +42,6 @@ fun UnfinishedGameCard(game: Game) {
                 headlineText = {
                     Text(text = player.name)
                 },
-                leadingContent = {
-                    Box(
-                        modifier = Modifier
-                            .size(24.dp)
-                            .clip(CircleShape)
-                            .background(player.color)
-                    )
-                },
                 trailingContent = {
                     Text(
                         text = "${player.score} points",

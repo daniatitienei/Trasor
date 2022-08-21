@@ -32,7 +32,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,17 +39,23 @@ import androidx.compose.ui.unit.dp
 import com.atitienei_daniel.core_designsystem.theme.TrasorTheme
 
 @Composable
-fun NewGameDestination() {
-    NewGameScreen()
+fun NewGameRoute(
+    onBackClick: () -> Unit
+) {
+    NewGameScreen(
+        onBackClick = onBackClick
+    )
 }
 
 @Composable
-fun NewGameScreen() {
+fun NewGameScreen(
+    onBackClick: () -> Unit
+) {
 
     val context = LocalContext.current
 
     val modalBottomSheetState =
-        rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Expanded)
+        rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
 
     ModalBottomSheetLayout(
         sheetState = modalBottomSheetState,
@@ -126,7 +131,7 @@ fun NewGameScreen() {
                         Text(text = stringResource(id = R.string.new_game))
                     },
                     navigationIcon = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = onBackClick) {
                             Icon(
                                 imageVector = Icons.Rounded.ArrowBackIosNew,
                                 contentDescription = null
@@ -239,6 +244,8 @@ fun NewGameScreen() {
 @Composable
 fun NewGameScreenPreview() {
     TrasorTheme {
-        NewGameScreen()
+        NewGameScreen(
+            onBackClick = {}
+        )
     }
 }

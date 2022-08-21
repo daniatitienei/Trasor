@@ -22,7 +22,7 @@ class GameRepositoryImpl @Inject constructor(
         }
 
     override suspend fun insertGame(game: Game) {
-        gameDao.insertGame(game.asEntity())
+        gameDao.insertOrIgnoreGame(game.asEntity())
     }
 
     override suspend fun updateGame(game: Game) {

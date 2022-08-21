@@ -1,17 +1,15 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id("dagger.hilt.android.plugin")
 }
 
 android {
-    namespace 'com.atitienei_daniel.core_database'
-    compileSdk 33
+    namespace 'com.atitienei_daniel.core_navigation'
+    compileSdk 32
 
     defaultConfig {
         minSdk 28
-        targetSdk 33
+        targetSdk 32
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -34,23 +32,7 @@ android {
 
 dependencies {
 
-    implementation(project(":core-model"))
-
-    def room_version = "2.4.3"
-
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation("androidx.room:room-ktx:$room_version")
-
-    implementation("com.google.dagger:hilt-android:2.42")
-    kapt("com.google.dagger:hilt-android-compiler:2.42")
-    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
-    kapt "androidx.hilt:hilt-compiler:1.0.0"
-
-    implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
-
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.6.1'
     testImplementation 'junit:junit:4.13.2'
