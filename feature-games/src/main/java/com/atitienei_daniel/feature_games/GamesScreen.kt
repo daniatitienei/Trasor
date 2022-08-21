@@ -27,16 +27,16 @@ import com.atitienei_daniel.core_model.previewPlayer
 import com.atitienei_daniel.core_ui.WinnerCard
 
 @Composable
-fun GamesScreen(viewModel: GamesViewModel = hiltViewModel()) {
+fun GamesDestination(viewModel: GamesViewModel = hiltViewModel()) {
     val games by viewModel.games.collectAsStateWithLifecycle(initialValue = emptyList())
 
-    GamesScreenContent(
+    GamesScreen(
         games = games
     )
 }
 
 @Composable
-fun GamesScreenContent(
+fun GamesScreen(
     games: List<Game>
 ) {
     Scaffold(
@@ -90,8 +90,8 @@ fun GamesScreenContent(
 
 @Preview
 @Composable
-private fun GamesScreenContentPreview() {
+private fun GamesScreenPreview() {
     TrasorTheme {
-        GamesScreenContent(games = listOf(previewGame))
+        GamesScreen(games = listOf(previewGame))
     }
 }
