@@ -15,6 +15,4 @@ class GamesViewModel @Inject constructor(
 ) : ViewModel() {
 
     val games = gameRepository.getGamesStream()
-
-
 }

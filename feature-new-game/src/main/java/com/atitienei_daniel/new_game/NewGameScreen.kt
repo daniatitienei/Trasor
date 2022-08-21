@@ -11,21 +11,24 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.*
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material.icons.rounded.Create
 import androidx.compose.material3.*
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,91 +40,64 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.atitienei_daniel.core_designsystem.theme.TrasorTheme
+import com.atitienei_daniel.core_model.previewPlayer
+import com.google.accompanist.flowlayout.FlowRow
+import kotlinx.coroutines.launch
 
 @Composable
 fun NewGameRoute(
     onBackClick: () -> Unit
 ) {
+    val modalBottomSheetState =
+        rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+
     NewGameScreen(
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        modalBottomSheetState = modalBottomSheetState
     )
 }
 
 @Composable
 fun NewGameScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    modalBottomSheetState: ModalBottomSheetState
 ) {
 
     val context = LocalContext.current
-
-    val modalBottomSheetState =
-        rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+    val coroutineScope = rememberCoroutineScope()
 
     ModalBottomSheetLayout(
         sheetState = modalBottomSheetState,
         sheetContent = {
-            Box(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.5f)
-                    .padding(30.dp)
-                    .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(20.dp)
+                    .padding(horizontal = 20.dp, vertical = 10.dp)
             ) {
-                Scaffold(
-                    bottomBar = {
-                        Button(
-                            onClick = { /*TODO*/ },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(text = stringResource(id = R.string.done))
-                        }
-                    }
-                ) { innerPadding ->
-                    LazyColumn(
-                        modifier = Modifier.consumedWindowInsets(innerPadding),
-                        verticalArrangement = Arrangement.spacedBy(15.dp)
-                    ) {
-                        item {
-                            Text(
-                                text = stringResource(id = R.string.player_name),
-                                style = MaterialTheme.typography.titleLarge
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            OutlinedTextField(
-                                value = "",
-                                onValueChange = {},
-                                placeholder = {
-                                    Text(text = stringResource(R.string.player_name_placeholder))
-                                },
-                                shape = RoundedCornerShape(corner = CornerSize(10.dp)),
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                        item {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.color),
-                                    style = MaterialTheme.typography.titleLarge
-                                )
-                                Box(
-                                    modifier = Modifier
-                                        .size(36.dp)
-                                        .clip(CircleShape)
-                                        .background(Color.Green)
-                                )
-                            }
-                        }
+                TextField(
+                    value = "",
+                    onValueChange = {},
+                    placeholder = {
+                        Text(text = stringResource(id = R.string.player_name))
+                    },
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        cursorColor = MaterialTheme.colorScheme.primary,
+                        placeholderColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f)
+                    )
+                )
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.CenterEnd
+                ) {
+                    TextButton(onClick = { /*TODO*/ }) {
+                        Text(text = "Save")
                     }
                 }
             }
         },
-        sheetBackgroundColor = Color.Transparent,
         sheetElevation = 0.dp,
     ) {
         Scaffold(
@@ -143,10 +119,10 @@ fun NewGameScreen(
             floatingActionButton = {
                 ExtendedFloatingActionButton(
                     text = {
-                        Text(text = stringResource(id = R.string.add_player))
+                        Text(text = stringResource(id = R.string.create_game))
                     },
                     icon = {
-                        Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+                        Icon(imageVector = Icons.Rounded.Create, contentDescription = null)
                     },
                     onClick = { /*TODO*/ }
                 )
@@ -184,6 +160,7 @@ fun NewGameScreen(
                             withStyle(style = MaterialTheme.typography.titleLarge.toSpanStyle()) {
                                 append(context.getString(R.string.max_points))
                             }
+                            append(" ")
                             withStyle(style = MaterialTheme.typography.bodyLarge.toSpanStyle()) {
                                 append("(${context.getString(R.string.optional)})")
                             }
@@ -207,33 +184,106 @@ fun NewGameScreen(
                         style = MaterialTheme.typography.titleLarge
                     )
                 }
-                items(5) {
-                    ListItem(
-                        headlineText = {
-                            Text(text = "Dani")
-                        },
-                        leadingContent = {
-                            Box(
-                                modifier = Modifier
-                                    .size(24.dp)
-                                    .clip(CircleShape)
-                                    .background(Color.Green)
+                item {
+                    FlowRow(
+                        mainAxisSpacing = 8.dp
+                    ) {
+                        (1..5).forEach { _ ->
+                            InputChip(
+                                selected = true,
+                                onClick = { /*TODO*/ },
+                                label = { Text(text = previewPlayer.name) },
+                                trailingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Close,
+                                        contentDescription = null
+                                    )
+                                }
                             )
-                        },
-                        trailingContent = {
-                            IconButton(onClick = { /*TODO*/ }) {
+                        }
+                        InputChip(
+                            selected = true,
+                            onClick = {
+                                coroutineScope.launch {
+                                    modalBottomSheetState.show()
+                                }
+                            },
+                            label = { Text(text = stringResource(id = R.string.add_player)) },
+                            leadingIcon = {
                                 Icon(
-                                    imageVector = Icons.Rounded.Close,
+                                    imageVector = Icons.Rounded.Add,
                                     contentDescription = null
                                 )
-                            }
-                        },
-                        modifier = Modifier.clip(
-                            RoundedCornerShape(
-                                corner = CornerSize(10.dp)
+                            },
+                            colors = InputChipDefaults.inputChipColors(
+                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer
                             )
                         )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun AddPlayerModalBottomSheet() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.5f)
+            .padding(30.dp)
+            .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
+            .background(MaterialTheme.colorScheme.background)
+            .padding(20.dp)
+    ) {
+        Scaffold(
+            bottomBar = {
+                Button(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = stringResource(id = R.string.done))
+                }
+            }
+        ) { innerPadding ->
+            LazyColumn(
+                modifier = Modifier.consumedWindowInsets(innerPadding),
+                verticalArrangement = Arrangement.spacedBy(15.dp)
+            ) {
+                item {
+                    Text(
+                        text = stringResource(id = R.string.player_name),
+                        style = MaterialTheme.typography.titleLarge
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = "",
+                        onValueChange = {},
+                        placeholder = {
+                            Text(text = stringResource(R.string.player_name_placeholder))
+                        },
+                        shape = RoundedCornerShape(corner = CornerSize(10.dp)),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                item {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.color),
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clip(CircleShape)
+                                .background(Color.Green)
+                        )
+                    }
                 }
             }
         }
@@ -245,7 +295,8 @@ fun NewGameScreen(
 fun NewGameScreenPreview() {
     TrasorTheme {
         NewGameScreen(
-            onBackClick = {}
+            onBackClick = {},
+            modalBottomSheetState = ModalBottomSheetState(ModalBottomSheetValue.Hidden)
         )
     }
 }
