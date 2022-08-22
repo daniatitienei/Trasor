@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":core-designsystem"))
     implementation(project(":core-ui"))
     implementation(project(":core-model"))
+    implementation(project(":core-data"))
     implementation(project(":core-navigation"))
 
     implementation("androidx.compose.material:material-icons-extended:1.2.1")
@@ -51,6 +52,10 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.42")
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
     kapt "androidx.hilt:hilt-compiler:1.0.0"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version"
 
     def accompanist_version = "0.26.1-alpha"
     implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"

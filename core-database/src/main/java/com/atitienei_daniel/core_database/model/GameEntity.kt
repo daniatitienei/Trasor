@@ -9,7 +9,7 @@ import com.atitienei_daniel.core_model.Game
     tableName = "game"
 )
 data class GameEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     val name: String,
     val players: List<PlayerEntity>,

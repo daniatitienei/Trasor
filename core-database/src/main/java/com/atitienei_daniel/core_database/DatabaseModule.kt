@@ -27,5 +27,6 @@ object DatabaseModule {
     )
         .addTypeConverter(PlayerEntityConverter(moshi))
         .addTypeConverter(PlayerEntityListConverter(moshi))
+        .fallbackToDestructiveMigration()
         .build()
 }
