@@ -3,6 +3,7 @@ package com.atitienei_daniel.trasor
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.core.view.WindowCompat
 import com.atitienei_daniel.core_designsystem.theme.TrasorTheme
 import com.atitienei_daniel.feature_games.GamesRoute
 import com.atitienei_daniel.trasor.navigation.TrasorNavHost
