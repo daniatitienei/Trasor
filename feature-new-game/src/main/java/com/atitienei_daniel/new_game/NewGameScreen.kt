@@ -1,12 +1,13 @@
 @file:OptIn(
     ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class,
-    ExperimentalLayoutApi::class, ExperimentalLifecycleComposeApi::class,
+    ExperimentalLifecycleComposeApi::class,
     ExperimentalComposeUiApi::class
 )
 
 package com.atitienei_daniel.new_game
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -103,12 +104,12 @@ fun NewGameScreen(
     focusRequester: FocusRequester,
     focusManager: FocusManager
 ) {
-
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
     AddPlayerModalBottomSheet(
         playerName = uiState.newPlayerName,
+        playerNameError = uiState.newPlayerNameError,
         onEvent = onEvent,
         focusRequester = focusRequester,
         modalBottomSheetState = modalBottomSheetState
@@ -138,8 +139,11 @@ fun NewGameScreen(
                         Icon(imageVector = Icons.Rounded.Create, contentDescription = null)
                     },
                     onClick = {
-                        onEvent(NewGameScreenEvents.OnCreateGame)
-                        onBackClick()
+                        onEvent(
+                            NewGameScreenEvents.OnCreateGame(
+                                onSuccess = onBackClick
+                            )
+                        )
                     }
                 )
             }
@@ -160,26 +164,38 @@ fun NewGameScreen(
                         style = MaterialTheme.typography.titleLarge
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    OutlinedTextField(
-                        value = uiState.gameName,
-                        onValueChange = {
-                            onEvent(NewGameScreenEvents.OnGameNameChanged(it))
-                        },
-                        placeholder = {
-                            Text(text = stringResource(R.string.game_name_placeholder))
-                        },
-                        shape = RoundedCornerShape(corner = CornerSize(10.dp)),
-                        modifier = Modifier.fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(
-                            imeAction = ImeAction.Next,
-                            capitalization = KeyboardCapitalization.Sentences
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onNext = {
-                                focusManager.moveFocus(FocusDirection.Down)
-                            }
+                    Column(
+                        modifier = Modifier.animateContentSize(tween(200))
+                    ) {
+                        OutlinedTextField(
+                            value = uiState.gameName,
+                            onValueChange = {
+                                onEvent(NewGameScreenEvents.OnGameNameChanged(it))
+                            },
+                            placeholder = {
+                                Text(text = stringResource(R.string.game_name_placeholder))
+                            },
+                            shape = RoundedCornerShape(corner = CornerSize(10.dp)),
+                            modifier = Modifier.fillMaxWidth(),
+                            keyboardOptions = KeyboardOptions(
+                                imeAction = ImeAction.Next,
+                                capitalization = KeyboardCapitalization.Sentences
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onNext = {
+                                    focusManager.moveFocus(FocusDirection.Down)
+                                }
+                            ),
+                            isError = uiState.gameNameError != null
                         )
-                    )
+                        uiState.gameNameError?.let { errorMessage ->
+                            Text(
+                                text = errorMessage,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
+                    }
                 }
                 item {
                     Text(
@@ -212,6 +228,7 @@ fun NewGameScreen(
                         keyboardActions = KeyboardActions(
                             onDone = {
                                 coroutineScope.launch {
+
                                     modalBottomSheetState.show()
                                 }
                             }
@@ -288,6 +305,7 @@ private fun Players(
 @Composable
 private fun AddPlayerModalBottomSheet(
     playerName: String,
+    playerNameError: String?,
     onEvent: (NewGameScreenEvents) -> Unit,
     focusRequester: FocusRequester,
     modalBottomSheetState: ModalBottomSheetState,
@@ -300,6 +318,7 @@ private fun AddPlayerModalBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp, vertical = 10.dp)
+                    .animateContentSize(tween(200))
             ) {
                 TextField(
                     value = playerName,
@@ -317,15 +336,25 @@ private fun AddPlayerModalBottomSheet(
                             onEvent(NewGameScreenEvents.OnSaveNewPlayer)
                         }
                     ),
-                    modifier = Modifier.focusRequester(focusRequester),
+                    modifier = Modifier
+                        .focusRequester(focusRequester)
+                        .fillMaxWidth(),
                     colors = TextFieldDefaults.textFieldColors(
                         backgroundColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         cursorColor = MaterialTheme.colorScheme.primary,
                         placeholderColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f)
-                    )
+                    ),
+                    isError = playerNameError != null
                 )
+                playerNameError?.let { errorMessage ->
+                    Text(
+                        text = errorMessage,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
                 Box(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.CenterEnd
@@ -335,7 +364,7 @@ private fun AddPlayerModalBottomSheet(
                             onEvent(NewGameScreenEvents.OnSaveNewPlayer)
                         }
                     ) {
-                        Text(text = "Save")
+                        Text(text = stringResource(id = R.string.save))
                     }
                 }
             }

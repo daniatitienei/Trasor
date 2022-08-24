@@ -36,6 +36,14 @@ class NewGameViewModel @Inject constructor(
                 )
             }
             is NewGameScreenEvents.OnSaveNewPlayer -> {
+                if (_uiState.value.newPlayerName.isEmpty()) {
+                    _uiState.value = _uiState.value.copy(
+                        newPlayerNameError = "Name is empty"
+                    )
+                    return
+                }
+                clearPlayerNameError()
+
                 val newPlayersList = _uiState.value.players.toMutableList()
 
                 newPlayersList.add(
@@ -48,13 +56,30 @@ class NewGameViewModel @Inject constructor(
                 )
             }
             is NewGameScreenEvents.OnCreateGame -> {
-                viewModelScope.launch {
-                    gameRepository.insertGame(
-                        game = Game(
-                            name = _uiState.value.gameName,
-                            players = _uiState.value.players
-                        )
+                if (_uiState.value.gameName.isEmpty()) {
+                    _uiState.value = _uiState.value.copy(
+                        gameNameError = "Name is empty"
                     )
+                    return
+                }
+
+                clearGameNameError()
+
+                val hasError = listOf(
+                    _uiState.value.gameNameError,
+                    _uiState.value.newPlayerNameError
+                ).any { it != null }
+
+                if (!hasError && _uiState.value.players.isNotEmpty()) {
+                    viewModelScope.launch {
+                        gameRepository.insertGame(
+                            game = Game(
+                                name = _uiState.value.gameName,
+                                players = _uiState.value.players
+                            )
+                        )
+                    }
+                    event.onSuccess()
                 }
             }
             is NewGameScreenEvents.OnRemovePlayerClick -> {
@@ -72,6 +97,18 @@ class NewGameViewModel @Inject constructor(
     fun clearNewPlayerName() {
         _uiState.value = _uiState.value.copy(
             newPlayerName = ""
+        )
+    }
+
+    private fun clearPlayerNameError() {
+        _uiState.value = _uiState.value.copy(
+            newPlayerNameError = null
+        )
+    }
+
+    fun clearGameNameError() {
+        _uiState.value = _uiState.value.copy(
+            gameNameError = null
         )
     }
 }
