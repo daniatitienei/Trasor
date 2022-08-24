@@ -14,4 +14,5 @@
     <string name="optional">optional</string>
     <string name="max_points_placeholder">ex: 13</string>
     <string name="create_game">Create game</string>
+    <string name="save">Save</string>
 </resources>

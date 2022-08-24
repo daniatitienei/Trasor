@@ -3,4 +3,5 @@
     <string name="latest_game">Latest game</string>
     <string name="new_game">New game</string>
     <string name="unfinished_games">Unfinished games</string>
+    <string name="no_games_started">No games started</string>
 </resources>
