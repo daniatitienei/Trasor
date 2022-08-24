@@ -7,5 +7,5 @@ sealed interface UpdateGameScreenEvents {
     data class OnIncreasePlayerScore(val game: Game, val player: Player) : UpdateGameScreenEvents
     data class OnDecreasePlayerScore(val game: Game, val player: Player) : UpdateGameScreenEvents
 
-    object OnEndGame : UpdateGameScreenEvents
+    data class OnEndGame(val game: Game) : UpdateGameScreenEvents
 }

@@ -2,10 +2,11 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id("dagger.hilt.android.plugin")
 }
 
 android {
-    namespace 'com.atitienei_daniel.core_data'
+    namespace 'com.example.core_datastore'
     compileSdk 33
 
     defaultConfig {
@@ -33,9 +34,7 @@ android {
 
 dependencies {
 
-    implementation(project(":core-database"))
     implementation(project(":core-model"))
-    implementation(project(":core-datastore"))
 
     implementation "androidx.datastore:datastore-preferences-core:1.0.0"
     implementation "androidx.datastore:datastore-preferences:1.0.0"

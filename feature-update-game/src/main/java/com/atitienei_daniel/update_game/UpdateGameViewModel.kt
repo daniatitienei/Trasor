@@ -39,7 +39,9 @@ class UpdateGameViewModel @Inject constructor(
                 }
             }
             is UpdateGameScreenEvents.OnEndGame -> {
-                /*TODO*/
+                viewModelScope.launch {
+                    gameRepository.endGame(event.game)
+                }
             }
         }
     }

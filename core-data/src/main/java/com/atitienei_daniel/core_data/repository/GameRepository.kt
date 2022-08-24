@@ -13,4 +13,6 @@ interface GameRepository {
 
     suspend fun increasePlayerScore(game: Game, player: Player)
     suspend fun decreasePlayerScore(game: Game, player: Player)
+
+    suspend fun endGame(game: Game)
 }

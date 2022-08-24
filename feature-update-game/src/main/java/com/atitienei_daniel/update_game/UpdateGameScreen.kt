@@ -61,7 +61,10 @@ fun UpdateGameScreen(
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    onEvent(UpdateGameScreenEvents.OnEndGame(game))
+                    onBackClick()
+                },
                 text = {
                     Text(text = stringResource(id = R.string.end_game))
                 },
