@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/core-ui" />
             <option value="$PROJECT_DIR$/feature-games" />
             <option value="$PROJECT_DIR$/feature-new-game" />
+            <option value="$PROJECT_DIR$/feature-update-game" />
           </set>
         </option>
       </GradleProjectSettings>

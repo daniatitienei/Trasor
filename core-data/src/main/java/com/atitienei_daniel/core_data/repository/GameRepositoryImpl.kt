@@ -5,6 +5,7 @@ import com.atitienei_daniel.core_database.dao.GameDao
 import com.atitienei_daniel.core_database.model.GameEntity
 import com.atitienei_daniel.core_database.model.asExternalModel
 import com.atitienei_daniel.core_model.Game
+import com.atitienei_daniel.core_model.Player
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -31,5 +32,42 @@ class GameRepositoryImpl @Inject constructor(
 
     override suspend fun deleteGame(gameId: Int) {
         gameDao.deleteGame(gameId)
+    }
+
+    override suspend fun increasePlayerScore(game: Game, player: Player) {
+        val playerWithScoreUpdated = player.copy(
+            score = player.score + 1
+        )
+        val players = game.players.toMutableList().map {
+            if (it.name == player.name) {
+                playerWithScoreUpdated
+            } else it
+        }
+
+        updateGame(
+            game.copy(
+                players = players
+            )
+        )
+    }
+
+    override suspend fun decreasePlayerScore(game: Game, player: Player) {
+        if (player.score < 1) {
+            return
+        }
+        val playerWithScoreUpdated = player.copy(
+            score = player.score - 1
+        )
+        val players = game.players.toMutableList().map {
+            if (it.name == player.name) {
+                playerWithScoreUpdated
+            } else it
+        }
+
+        updateGame(
+            game.copy(
+                players = players
+            )
+        )
     }
 }

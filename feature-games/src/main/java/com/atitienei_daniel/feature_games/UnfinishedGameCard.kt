@@ -19,9 +19,12 @@ import com.atitienei_daniel.core_model.Player
 import com.atitienei_daniel.core_model.previewGame
 
 @Composable
-fun UnfinishedGameCard(game: Game) {
+fun UnfinishedGameCard(
+    game: Game,
+    onClick: () -> Unit
+) {
     Card(
-        onClick = { /*TODO*/ }
+        onClick = onClick
     ) {
         Box(
             modifier = Modifier
@@ -31,7 +34,7 @@ fun UnfinishedGameCard(game: Game) {
         ) {
             Text(
                 text = game.name,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleLarge
             )
         }
 
@@ -61,7 +64,8 @@ fun UnfinishedGameCard(game: Game) {
 fun UnfinishedGameCardPreview() {
     TrasorTheme {
         UnfinishedGameCard(
-            game = previewGame
+            game = previewGame,
+            onClick = {}
         )
     }
 }

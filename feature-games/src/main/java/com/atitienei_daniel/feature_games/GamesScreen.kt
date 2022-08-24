@@ -29,20 +29,23 @@ import com.atitienei_daniel.core_ui.WinnerCard
 @Composable
 fun GamesRoute(
     viewModel: GamesViewModel = hiltViewModel(),
-    navigateToNewGame: () -> Unit
+    navigateToNewGame: () -> Unit,
+    navigateToGame: (Int) -> Unit
 ) {
     val games by viewModel.games.collectAsStateWithLifecycle(initialValue = emptyList())
 
     GamesScreen(
         games = games,
-        navigateToNewGame = navigateToNewGame
+        navigateToNewGame = navigateToNewGame,
+        navigateToUpdateGame = navigateToGame
     )
 }
 
 @Composable
 fun GamesScreen(
     games: List<Game>,
-    navigateToNewGame: () -> Unit
+    navigateToNewGame: () -> Unit,
+    navigateToUpdateGame: (Int) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -87,8 +90,13 @@ fun GamesScreen(
                     style = MaterialTheme.typography.titleLarge
                 )
             }
-            items(games) {
-                UnfinishedGameCard(game = it)
+            items(games) { game ->
+                UnfinishedGameCard(
+                    game = game,
+                    onClick = {
+                        navigateToUpdateGame(game.id)
+                    }
+                )
             }
         }
     }
@@ -98,6 +106,10 @@ fun GamesScreen(
 @Composable
 private fun GamesScreenPreview() {
     TrasorTheme {
-        GamesScreen(games = listOf(previewGame), navigateToNewGame = {})
+        GamesScreen(
+            games = listOf(previewGame),
+            navigateToNewGame = {},
+            navigateToUpdateGame = {}
+        )
     }
 }

@@ -10,11 +10,13 @@ object GamesNavigationDestination : TrasorNavigationDestination {
 }
 
 fun NavGraphBuilder.gamesGraph(
-    navigateToNewGame: () -> Unit
+    navigateToNewGame: () -> Unit,
+    navigateToGame: (Int) -> Unit
 ) {
     composable(route = GamesNavigationDestination.route) {
         GamesRoute(
-            navigateToNewGame = navigateToNewGame
+            navigateToNewGame = navigateToNewGame,
+            navigateToGame = navigateToGame
         )
     }
 }
