@@ -7,6 +7,8 @@ import com.atitienei_daniel.feature_games.navigation.GamesNavigationDestination
 import com.atitienei_daniel.feature_games.navigation.gamesGraph
 import com.atitienei_daniel.new_game.navigation.NewGameNavigationDestination
 import com.atitienei_daniel.new_game.navigation.newGameGraph
+import com.atitienei_daniel.update_game.navigation.UpdateGameNavigationDestination
+import com.atitienei_daniel.update_game.navigation.updateGameGraph
 
 @Composable
 fun TrasorNavHost() {
@@ -16,9 +18,22 @@ fun TrasorNavHost() {
         gamesGraph(
             navigateToNewGame = {
                 navController.navigate(NewGameNavigationDestination.route)
+            },
+            navigateToGame = {
+                navController.navigate(
+                    UpdateGameNavigationDestination.route.replace(
+                        "{gameId}",
+                        it.toString()
+                    )
+                )
             }
         )
         newGameGraph(
+            onBackClick = {
+                navController.popBackStack()
+            }
+        )
+        updateGameGraph(
             onBackClick = {
                 navController.popBackStack()
             }

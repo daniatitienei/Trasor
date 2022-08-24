@@ -5,6 +5,7 @@
 
 package com.atitienei_daniel.feature_games
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,24 +26,31 @@ import com.atitienei_daniel.core_model.Game
 import com.atitienei_daniel.core_model.previewGame
 import com.atitienei_daniel.core_model.previewPlayer
 import com.atitienei_daniel.core_ui.WinnerCard
+import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
 fun GamesRoute(
     viewModel: GamesViewModel = hiltViewModel(),
-    navigateToNewGame: () -> Unit
+    navigateToNewGame: () -> Unit,
+    navigateToGame: (Int) -> Unit
 ) {
     val games by viewModel.games.collectAsStateWithLifecycle(initialValue = emptyList())
+    val latestGame by viewModel.latestGame.collectAsStateWithLifecycle(initialValue = null)
 
     GamesScreen(
         games = games,
-        navigateToNewGame = navigateToNewGame
+        latestGame = latestGame,
+        navigateToNewGame = navigateToNewGame,
+        navigateToUpdateGame = navigateToGame
     )
 }
 
 @Composable
 fun GamesScreen(
     games: List<Game>,
-    navigateToNewGame: () -> Unit
+    latestGame: Game?,
+    navigateToNewGame: () -> Unit,
+    navigateToUpdateGame: (Int) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -70,25 +78,36 @@ fun GamesScreen(
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             item {
-                Text(
-                    text = stringResource(R.string.latest_game),
-                    style = MaterialTheme.typography.titleLarge
-                )
+                AnimatedVisibility(visible = latestGame?.winner != null) {
+                    Text(
+                        text = stringResource(R.string.latest_game),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
             }
             item {
-                WinnerCard(
-                    player = previewPlayer
-                )
+                latestGame?.winner?.let { winner ->
+                    WinnerCard(
+                        player = winner
+                    )
+                }
             }
             item {
-                Spacer(modifier = Modifier.height(15.dp))
-                Text(
-                    text = stringResource(id = R.string.unfinished_games) + " \uD83D\uDEA7",
-                    style = MaterialTheme.typography.titleLarge
-                )
+                AnimatedVisibility(visible = games.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Text(
+                        text = stringResource(id = R.string.unfinished_games) + " \uD83D\uDEA7",
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
             }
-            items(games) {
-                UnfinishedGameCard(game = it)
+            items(games) { game ->
+                UnfinishedGameCard(
+                    game = game,
+                    onClick = {
+                        navigateToUpdateGame(game.id)
+                    }
+                )
             }
         }
     }
@@ -98,6 +117,11 @@ fun GamesScreen(
 @Composable
 private fun GamesScreenPreview() {
     TrasorTheme {
-        GamesScreen(games = listOf(previewGame), navigateToNewGame = {})
+        GamesScreen(
+            games = listOf(previewGame),
+            latestGame = previewGame,
+            navigateToNewGame = {},
+            navigateToUpdateGame = {}
+        )
     }
 }

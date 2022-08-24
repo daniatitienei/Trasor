@@ -50,8 +50,9 @@ android {
 dependencies {
 
     implementation(project(":core-designsystem"))
-    implementation(project(":feature-games"))
     implementation(project(':feature-new-game'))
+    implementation(project(":feature-update-game"))
+    implementation(project(":feature-games"))
     implementation(project(':core-navigation'))
 
     def nav_version = "2.5.1"

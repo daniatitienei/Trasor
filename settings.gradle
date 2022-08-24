@@ -14,7 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Trasor"
 include ':app'
-include ':feature-games'
 include ':core-designsystem'
 include ':core-ui'
 include ':core-model'
@@ -22,3 +21,7 @@ include ':feature-new-game'
 include ':core-database'
 include ':core-data'
 include ':core-navigation'
+include ':feature-update-game'
+include ':feature-games'
+include ':core-datastore'
+include ':core-datastore'
