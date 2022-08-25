@@ -13,12 +13,14 @@ data class GameEntity(
     val id: Int,
     val name: String,
     val players: List<PlayerEntity>,
+    val maxScore: Int?,
     val finished: Boolean,
     val winner: PlayerEntity?
 )
 
 fun GameEntity.asExternalModel() = Game(
     id = id,
+    maxScore = maxScore,
     name = name,
     players = players.map { it.toExternalModel() },
     finished = finished,

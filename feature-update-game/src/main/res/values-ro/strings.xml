@@ -3,4 +3,5 @@
 
     <string name="players">Players</string>
     <string name="end_game">End game</string>
+    <string name="points">points</string>
 </resources>

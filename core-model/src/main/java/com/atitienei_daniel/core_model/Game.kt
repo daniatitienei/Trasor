@@ -7,6 +7,7 @@ data class Game(
     val name: String = "",
     val players: List<Player> = emptyList(),
     val finished: Boolean = false,
+    val maxScore: Int? = null,
     val winner: Player? = null
 )
 

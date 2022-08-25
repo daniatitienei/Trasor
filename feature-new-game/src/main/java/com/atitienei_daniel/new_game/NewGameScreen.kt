@@ -40,7 +40,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
@@ -186,6 +185,7 @@ fun NewGameScreen(
                                     focusManager.moveFocus(FocusDirection.Down)
                                 }
                             ),
+                            singleLine = true,
                             isError = uiState.gameNameError != null
                         )
                         uiState.gameNameError?.let { errorMessage ->
@@ -212,7 +212,7 @@ fun NewGameScreen(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     OutlinedTextField(
-                        value = uiState.maxPoints,
+                        value = uiState.maxScore ?: "",
                         onValueChange = {
                             onEvent(NewGameScreenEvents.OnMaxPointsChanged(it))
                         },
@@ -225,6 +225,7 @@ fun NewGameScreen(
                             imeAction = ImeAction.Done,
                             keyboardType = KeyboardType.Number
                         ),
+                        singleLine = true,
                         keyboardActions = KeyboardActions(
                             onDone = {
                                 coroutineScope.launch {
@@ -336,6 +337,7 @@ private fun AddPlayerModalBottomSheet(
                             onEvent(NewGameScreenEvents.OnSaveNewPlayer)
                         }
                     ),
+                    singleLine = true,
                     modifier = Modifier
                         .focusRequester(focusRequester)
                         .fillMaxWidth(),

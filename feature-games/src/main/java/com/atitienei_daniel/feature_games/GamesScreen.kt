@@ -6,6 +6,9 @@
 package com.atitienei_daniel.feature_games
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,7 +17,6 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,9 +27,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.atitienei_daniel.core_designsystem.theme.TrasorTheme
 import com.atitienei_daniel.core_model.Game
 import com.atitienei_daniel.core_model.previewGame
-import com.atitienei_daniel.core_model.previewPlayer
 import com.atitienei_daniel.core_ui.WinnerCard
-import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
 fun GamesRoute(
@@ -79,7 +79,11 @@ fun GamesScreen(
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             item {
-                AnimatedVisibility(visible = latestGame?.winner != null) {
+                AnimatedVisibility(
+                    visible = latestGame?.winner != null,
+                    enter = fadeIn(tween(200)),
+                    exit = fadeOut(tween(200))
+                ) {
                     Text(
                         text = stringResource(R.string.latest_game),
                         style = MaterialTheme.typography.titleLarge
@@ -94,7 +98,11 @@ fun GamesScreen(
                 }
             }
             item {
-                AnimatedVisibility(visible = games.isNotEmpty()) {
+                AnimatedVisibility(
+                    visible = games.isNotEmpty(),
+                    enter = fadeIn(tween(200)),
+                    exit = fadeOut(tween(200))
+                ) {
                     Spacer(modifier = Modifier.height(15.dp))
                     Text(
                         text = stringResource(id = R.string.unfinished_games) + " \uD83D\uDEA7",

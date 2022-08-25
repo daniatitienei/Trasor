@@ -8,5 +8,6 @@ fun Game.asEntity() = GameEntity(
     name = name,
     players = players.map { it.asEntity() },
     finished = finished,
-    winner = winner?.asEntity()
+    winner = winner?.asEntity(),
+    maxScore = maxScore
 )
