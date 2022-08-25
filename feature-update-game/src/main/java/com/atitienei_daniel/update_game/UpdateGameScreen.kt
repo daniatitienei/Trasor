@@ -100,7 +100,7 @@ fun UpdateGameScreen(
                         style = MaterialTheme.typography.titleLarge
                     )
                     game.maxScore?.let {
-                        Text(text = game.maxScore.toString() + stringResource(id = R.string.points))
+                        Text(text = game.maxScore.toString() + " " + stringResource(id = R.string.points))
                     }
                 }
             }

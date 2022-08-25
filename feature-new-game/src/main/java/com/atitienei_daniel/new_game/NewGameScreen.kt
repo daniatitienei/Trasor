@@ -185,6 +185,7 @@ fun NewGameScreen(
                                     focusManager.moveFocus(FocusDirection.Down)
                                 }
                             ),
+                            singleLine = true,
                             isError = uiState.gameNameError != null
                         )
                         uiState.gameNameError?.let { errorMessage ->
@@ -224,6 +225,7 @@ fun NewGameScreen(
                             imeAction = ImeAction.Done,
                             keyboardType = KeyboardType.Number
                         ),
+                        singleLine = true,
                         keyboardActions = KeyboardActions(
                             onDone = {
                                 coroutineScope.launch {
@@ -335,6 +337,7 @@ private fun AddPlayerModalBottomSheet(
                             onEvent(NewGameScreenEvents.OnSaveNewPlayer)
                         }
                     ),
+                    singleLine = true,
                     modifier = Modifier
                         .focusRequester(focusRequester)
                         .fillMaxWidth(),
