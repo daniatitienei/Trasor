@@ -5,7 +5,7 @@ import com.atitienei_daniel.core_model.Player
 data class NewGameScreenState(
     val gameName: String = "",
     val gameNameError: String? = null,
-    val maxPoints: String = "",
+    val maxScore: String? = null,
     val newPlayerName: String = "",
     val newPlayerNameError: String? = null,
     val players: List<Player> = emptyList()

@@ -32,7 +32,7 @@ class NewGameViewModel @Inject constructor(
             }
             is NewGameScreenEvents.OnMaxPointsChanged -> {
                 _uiState.value = _uiState.value.copy(
-                    maxPoints = event.value
+                    maxScore = event.value
                 )
             }
             is NewGameScreenEvents.OnSaveNewPlayer -> {
@@ -75,7 +75,8 @@ class NewGameViewModel @Inject constructor(
                         gameRepository.insertGame(
                             game = Game(
                                 name = _uiState.value.gameName,
-                                players = _uiState.value.players
+                                players = _uiState.value.players,
+                                maxScore = _uiState.value.maxScore?.toInt()
                             )
                         )
                     }

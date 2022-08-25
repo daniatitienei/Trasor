@@ -10,7 +10,7 @@ import com.atitienei_daniel.core_database.util.PlayerEntityListConverter
 
 @Database(
     entities = [GameEntity::class],
-    version = 2
+    version = 3
 )
 @TypeConverters(
     PlayerEntityConverter::class,
