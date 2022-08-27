@@ -80,4 +80,7 @@ object Dependencies {
     val roomKtx by lazy {
         "androidx.room:room-ktx:${Versions.room}"
     }
+    val appCompat by lazy {
+        "androidx.appcompat:appcompat:${Versions.appCompat}"
+    }
 }

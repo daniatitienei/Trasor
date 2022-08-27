@@ -18,4 +18,5 @@ object Versions {
     const val icons = "1.2.0"
     const val dataStore = "1.0.0"
     const val moshi = "1.13.0"
+    const val appCompat = "1.5.0"
 }
