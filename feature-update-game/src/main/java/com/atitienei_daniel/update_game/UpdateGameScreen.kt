@@ -2,7 +2,6 @@
 
 package com.atitienei_daniel.update_game
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -26,8 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.atitienei_daniel.core_designsystem.theme.TrasorTheme
 import com.atitienei_daniel.core_model.Game
 import com.atitienei_daniel.core_model.previewGame
-import com.atitienei_daniel.core_ui.WinnerCard
-import com.example.update_game.R
+import com.atitienei_daniel.feature_update_game.R
 
 @Composable
 fun UpdateGameRoute(

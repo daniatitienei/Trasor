@@ -1,7 +1,6 @@
 @file:OptIn(
     ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class,
-    ExperimentalLifecycleComposeApi::class,
-    ExperimentalComposeUiApi::class
+    ExperimentalLifecycleComposeApi::class
 )
 
 package com.atitienei_daniel.new_game
@@ -16,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
@@ -53,6 +53,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.atitienei_daniel.core_designsystem.theme.TrasorTheme
 import com.atitienei_daniel.core_model.Player
+import com.atitienei_daniel.feature_new_game.R
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.launch
 

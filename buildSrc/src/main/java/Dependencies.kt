@@ -84,9 +84,9 @@ object Dependencies {
         "androidx.appcompat:appcompat:${Versions.appCompat}"
     }
     val material by lazy {
-        "com.google.android.material:material:${Versions.material}"
+        "androidx.compose.material:material:${Versions.material}"
     }
     val accompanistFlowLayout by lazy {
-        "com.google.accompanist:accompanist-flowlayout:$${Versions.accompanist}"
+        "com.google.accompanist:accompanist-flowlayout:${Versions.accompanist}"
     }
 }

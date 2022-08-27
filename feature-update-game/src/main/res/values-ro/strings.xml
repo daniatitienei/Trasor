@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="players">Players</string>
     <string name="end_game">End game</string>
     <string name="points">points</string>
