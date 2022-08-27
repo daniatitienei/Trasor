@@ -57,7 +57,7 @@ fun GamesScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = stringResource(id = com.atitienei_daniel.core_designsystem.R.string.app_name))
+                    Text(text = stringResource(id = R.string.app_name))
                 }
             )
         },
