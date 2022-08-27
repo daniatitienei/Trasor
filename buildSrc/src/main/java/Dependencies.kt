@@ -83,4 +83,7 @@ object Dependencies {
     val appCompat by lazy {
         "androidx.appcompat:appcompat:${Versions.appCompat}"
     }
+    val material by lazy {
+        "com.google.android.material:material:${Versions.material}"
+    }
 }
