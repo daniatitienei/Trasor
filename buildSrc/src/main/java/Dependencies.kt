@@ -71,4 +71,13 @@ object Dependencies {
     val moshi by lazy {
         "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
     }
+    val roomRuntime by lazy {
+        "androidx.room:room-runtime:${Versions.room}"
+    }
+    val roomCompiler by lazy {
+        "androidx.room:room-compiler:${Versions.room}"
+    }
+    val roomKtx by lazy {
+        "androidx.room:room-ktx:${Versions.room}"
+    }
 }
