@@ -11,7 +11,7 @@ object Dependencies {
     val lifecycleRuntimeCompose by lazy {
         "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycle}"
     }
-    val lifecycleRuntime by lazy {
+    val lifecycleRuntimeKtx by lazy {
         "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleRuntime}"
     }
     val hiltAndroid by lazy {
@@ -50,8 +50,8 @@ object Dependencies {
     val composeUiTooling by lazy {
         "androidx.compose.ui:ui-tooling:${Versions.composeUi}"
     }
-    val composeUITestManifest by lazy {
-        "androidx.compose.ui:ui-tooling:${Versions.composeUi}"
+    val composeUiTestManifest by lazy {
+        "androidx.compose.ui:ui-test-manifest:${Versions.composeUi}"
     }
     val composeUiTestJUnit by lazy {
         "androidx.compose.ui:ui-test-junit4:${Versions.composeUi}"

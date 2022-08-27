@@ -1,5 +1,5 @@
 object Versions {
-    const val material3 = "androidx.compose.material3:material3:1.0.0-beta01"
+    const val material3 = "1.0.0-beta01"
     const val compose = "1.3.0"
     const val composeUi = "1.2.1"
     const val room = "2.4.3"
