@@ -56,7 +56,7 @@ object Dependencies {
     val composeUiTestJUnit by lazy {
         "androidx.compose.ui:ui-test-junit4:${Versions.composeUi}"
     }
-    val composeGoogleFonts by lazy {
+    val googleFonts by lazy {
         "androidx.compose.ui:ui-text-google-fonts:${Versions.googleFonts}"
     }
     val iconsExtended by lazy {
