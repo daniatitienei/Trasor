@@ -1,24 +1,18 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
 }
 
 android {
+    namespace = "com.atitienei_daniel.core_data"
     compileSdk = ConfigData.compileSdkVersion
 
     defaultConfig {
-        applicationId = "com.atitienei_daniel.trasor"
         minSdk = ConfigData.minSdkVersion
         targetSdk = ConfigData.targetSdkVersion
-        versionCode = ConfigData.versionCode
-        versionName = ConfigData.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
@@ -44,27 +38,17 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
-    }
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
-    implementation(project(":core-designsystem"))
-    implementation(project(":feature-new-game"))
-    implementation(project(":feature-update-game"))
-    implementation(project(":feature-games"))
-    implementation(project(":core-navigation"))
 
-    implementation(Dependencies.navigationCompose)
+    implementation(project(":core-database"))
+    implementation(project(":core-model"))
+    implementation(project(":core-datastore"))
+
+    implementation(Dependencies.dataStorePreferencesCore)
+    implementation(Dependencies.dataStorePreferences)
+    implementation(Dependencies.moshi)
 
     implementation(Dependencies.hiltAndroid)
     kapt(Dependencies.hiltCompiler)

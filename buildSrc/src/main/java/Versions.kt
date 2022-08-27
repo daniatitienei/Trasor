@@ -14,4 +14,8 @@ object Versions {
     const val lifecycleRuntime = "2.5.1"
     const val core = "1.8.0"
     const val espresso = "3.4.0"
+    const val googleFonts = "1.3.0-beta01"
+    const val icons = "1.2.0"
+    const val dataStore = "1.0.0"
+    const val moshi = "1.13.0"
 }

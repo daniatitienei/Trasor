@@ -56,4 +56,19 @@ object Dependencies {
     val composeUiTestJUnit by lazy {
         "androidx.compose.ui:ui-test-junit4:${Versions.composeUi}"
     }
+    val composeGoogleFonts by lazy {
+        "androidx.compose.ui:ui-text-google-fonts:${Versions.googleFonts}"
+    }
+    val iconsExtended by lazy {
+        "androidx.compose.material:material-icons-extended:${Versions.icons}"
+    }
+    val dataStorePreferencesCore by lazy {
+        "androidx.datastore:datastore-preferences-core:${Versions.dataStore}"
+    }
+    val dataStorePreferences by lazy {
+        "androidx.datastore:datastore-preferences:${Versions.dataStore}"
+    }
+    val moshi by lazy {
+        "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
+    }
 }
