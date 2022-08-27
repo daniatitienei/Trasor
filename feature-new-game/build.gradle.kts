@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.atitienei_daniel.feature_games"
+    namespace = "com.atitienei_daniel.feature_new_game"
     compileSdk = ConfigData.compileSdkVersion
 
     defaultConfig {
@@ -27,7 +27,6 @@ dependencies {
     implementation(project(":core-model"))
     implementation(project(":core-data"))
     implementation(project(":core-navigation"))
-    implementation(project(":core-datastore"))
 
     implementation(Dependencies.navigationCompose)
 
@@ -43,10 +42,13 @@ dependencies {
     implementation(Dependencies.appCompat)
     implementation(Dependencies.material)
     implementation(Dependencies.material3)
+    implementation(Dependencies.moshi)
     implementation(Dependencies.lifecycleRuntimeKtx)
     implementation(Dependencies.lifecycleViewModelKtx)
     implementation(Dependencies.lifecycleRuntimeCompose)
     implementation(Dependencies.lifecycleViewModelCompose)
+    implementation(Dependencies.iconsExtended)
+    implementation(Dependencies.accompanistFlowLayout)
 
     debugImplementation(Dependencies.composeUiTooling)
     debugImplementation(Dependencies.composeUiTestManifest)
