@@ -79,6 +79,9 @@ fun NewGameRoute(
                 focusRequester.requestFocus()
             } else {
                 viewModel.clearNewPlayerName()
+                if (uiState.newPlayerNameError != null) {
+                    viewModel.clearPlayerNameError()
+                }
                 focusRequester.freeFocus()
                 focusManager.clearFocus(force = true)
             }

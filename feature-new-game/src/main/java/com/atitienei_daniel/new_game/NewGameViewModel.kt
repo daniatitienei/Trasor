@@ -101,7 +101,7 @@ class NewGameViewModel @Inject constructor(
         )
     }
 
-    private fun clearPlayerNameError() {
+    fun clearPlayerNameError() {
         _uiState.value = _uiState.value.copy(
             newPlayerNameError = null
         )
