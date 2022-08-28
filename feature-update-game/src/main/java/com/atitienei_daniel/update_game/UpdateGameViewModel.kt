@@ -30,7 +30,16 @@ class UpdateGameViewModel @Inject constructor(
         when (event) {
             is UpdateGameScreenEvents.OnIncreasePlayerScore -> {
                 viewModelScope.launch {
-                    gameRepository.increasePlayerScore(event.game, event.player)
+                    event.game.maxScore?.let { maxScore ->
+                        if (event.player.score < maxScore) {
+                            gameRepository.increasePlayerScore(event.game, event.player)
+                        } else if (event.game.winner == null && event.player.score.plus(1) == maxScore) {
+                            gameRepository.updateGame(event.game.copy(winner = event.player))
+                        }
+                    }
+                    if (event.game.maxScore == null) {
+                        gameRepository.increasePlayerScore(event.game, event.player)
+                    }
                 }
             }
             is UpdateGameScreenEvents.OnDecreasePlayerScore -> {
