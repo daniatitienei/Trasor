@@ -2,6 +2,11 @@
 
 package com.atitienei_daniel.update_game
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -25,6 +30,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.atitienei_daniel.core_designsystem.theme.TrasorTheme
 import com.atitienei_daniel.core_model.Game
 import com.atitienei_daniel.core_model.previewGame
+import com.atitienei_daniel.core_ui.WinnerCard
 import com.atitienei_daniel.feature_update_game.R
 
 @Composable
@@ -33,6 +39,15 @@ fun UpdateGameRoute(
     viewModel: UpdateGameViewModel = hiltViewModel(),
 ) {
     val game by viewModel.game.collectAsStateWithLifecycle(Game())
+
+    BackHandler(
+        onBack = {
+            if (game.winner != null) {
+                viewModel.onEvent(UpdateGameScreenEvents.OnEndGame(game))
+                onBackClick()
+            }
+        }
+    )
 
     UpdateGameScreen(
         game = game,
@@ -54,7 +69,14 @@ fun UpdateGameScreen(
                     Text(text = game.name)
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBackClick) {
+                    IconButton(
+                        onClick = {
+                            if (game.winner != null) {
+                                onEvent(UpdateGameScreenEvents.OnEndGame(game))
+                            }
+                            onBackClick()
+                        }
+                    ) {
                         Icon(
                             imageVector = Icons.Rounded.ArrowBackIosNew,
                             contentDescription = null
@@ -87,6 +109,15 @@ fun UpdateGameScreen(
             ),
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
+            item {
+                AnimatedVisibility(
+                    visible = game.winner != null,
+                    enter = fadeIn(tween(200)),
+                    exit = fadeOut(tween(200)),
+                ) {
+                    WinnerCard(player = game.winner!!)
+                }
+            }
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
