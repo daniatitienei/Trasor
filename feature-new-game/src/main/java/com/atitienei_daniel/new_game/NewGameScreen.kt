@@ -1,6 +1,6 @@
 @file:OptIn(
     ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class,
-    ExperimentalLifecycleComposeApi::class
+    ExperimentalLifecycleComposeApi::class, ExperimentalComposeUiApi::class
 )
 
 package com.atitienei_daniel.new_game
@@ -40,6 +40,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
@@ -53,8 +54,10 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.atitienei_daniel.core_designsystem.theme.TrasorTheme
 import com.atitienei_daniel.core_model.Player
+import com.atitienei_daniel.core_navigation.UiEvent
 import com.atitienei_daniel.feature_new_game.R
 import com.google.accompanist.flowlayout.FlowRow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @Composable
@@ -70,6 +73,23 @@ fun NewGameRoute(
     val focusManager = LocalFocusManager.current
     val focusRequester = remember {
         FocusRequester()
+    }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.uiEvent.collect { uiEvent ->
+            when (uiEvent) {
+                is UiEvent.PopBackStack -> {
+                    onBackClick()
+                }
+                else -> Unit
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        focusRequester.requestFocus()
+        keyboardController?.show()
     }
 
     LaunchedEffect(
@@ -89,7 +109,6 @@ fun NewGameRoute(
     )
 
     NewGameScreen(
-        onBackClick = onBackClick,
         modalBottomSheetState = modalBottomSheetState,
         uiState = uiState,
         onEvent = viewModel::onEvent,
@@ -100,7 +119,6 @@ fun NewGameRoute(
 
 @Composable
 fun NewGameScreen(
-    onBackClick: () -> Unit,
     modalBottomSheetState: ModalBottomSheetState,
     uiState: NewGameScreenState,
     onEvent: (NewGameScreenEvents) -> Unit,
@@ -124,7 +142,11 @@ fun NewGameScreen(
                         Text(text = stringResource(id = R.string.new_game))
                     },
                     navigationIcon = {
-                        IconButton(onClick = onBackClick) {
+                        IconButton(
+                            onClick = {
+                                onEvent(NewGameScreenEvents.OnNavigateBack)
+                            }
+                        ) {
                             Icon(
                                 imageVector = Icons.Rounded.ArrowBackIosNew,
                                 contentDescription = null
@@ -142,11 +164,7 @@ fun NewGameScreen(
                         Icon(imageVector = Icons.Rounded.Create, contentDescription = null)
                     },
                     onClick = {
-                        onEvent(
-                            NewGameScreenEvents.OnCreateGame(
-                                onSuccess = onBackClick
-                            )
-                        )
+                        onEvent(NewGameScreenEvents.OnCreateGame)
                     }
                 )
             }
@@ -179,7 +197,9 @@ fun NewGameScreen(
                                 Text(text = stringResource(R.string.game_name_placeholder))
                             },
                             shape = RoundedCornerShape(corner = CornerSize(10.dp)),
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .focusRequester(focusRequester),
                             keyboardOptions = KeyboardOptions(
                                 imeAction = ImeAction.Next,
                                 capitalization = KeyboardCapitalization.Sentences
@@ -385,7 +405,6 @@ private fun AddPlayerModalBottomSheet(
 fun NewGameScreenPreview() {
     TrasorTheme {
         NewGameScreen(
-            onBackClick = {},
             modalBottomSheetState = ModalBottomSheetState(ModalBottomSheetValue.Hidden),
             uiState = NewGameScreenState(),
             onEvent = {},

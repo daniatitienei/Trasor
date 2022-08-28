@@ -1,5 +1,5 @@
 @file:OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class,
+    ExperimentalMaterial3Api::class,
     ExperimentalLifecycleComposeApi::class
 )
 
@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,22 +28,32 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.atitienei_daniel.core_designsystem.theme.TrasorTheme
 import com.atitienei_daniel.core_model.Game
 import com.atitienei_daniel.core_model.previewGame
+import com.atitienei_daniel.core_navigation.UiEvent
 import com.atitienei_daniel.core_ui.WinnerCard
 
 @Composable
 fun GamesRoute(
     viewModel: GamesViewModel = hiltViewModel(),
-    navigateToNewGame: () -> Unit,
-    navigateToGame: (Int) -> Unit
+    onNavigate: (String) -> Unit
 ) {
-    val games by viewModel.games.collectAsStateWithLifecycle(initialValue = emptyList())
-    val latestGame by viewModel.latestGame.collectAsStateWithLifecycle(initialValue = null)
+    val games by viewModel.games.collectAsStateWithLifecycle()
+    val latestGame by viewModel.latestGame.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.uiEvent.collect { uiEvent ->
+            when (uiEvent) {
+                is UiEvent.Navigate -> {
+                    onNavigate(uiEvent.route)
+                }
+                else -> Unit
+            }
+        }
+    }
 
     GamesScreen(
         games = games,
         latestGame = latestGame,
-        navigateToNewGame = navigateToNewGame,
-        navigateToUpdateGame = navigateToGame
+        onEvent = viewModel::onEvent
     )
 }
 
@@ -50,8 +61,7 @@ fun GamesRoute(
 fun GamesScreen(
     games: List<Game>,
     latestGame: Game?,
-    navigateToNewGame: () -> Unit,
-    navigateToUpdateGame: (Int) -> Unit
+    onEvent: (GameScreenEvents) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -69,7 +79,9 @@ fun GamesScreen(
                 icon = {
                     Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
                 },
-                onClick = navigateToNewGame
+                onClick = {
+                    onEvent(GameScreenEvents.OnCreateGameFABClick)
+                }
             )
         }
     ) { innerPadding ->
@@ -114,7 +126,7 @@ fun GamesScreen(
                 UnfinishedGameCard(
                     game = game,
                     onClick = {
-                        navigateToUpdateGame(game.id)
+                        onEvent(GameScreenEvents.OnGameCardClick(game.id))
                     }
                 )
             }
@@ -129,8 +141,7 @@ private fun GamesScreenPreview() {
         GamesScreen(
             games = listOf(previewGame),
             latestGame = previewGame,
-            navigateToNewGame = {},
-            navigateToUpdateGame = {}
+            onEvent = {}
         )
     }
 }

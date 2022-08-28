@@ -7,6 +7,7 @@ sealed interface NewGameScreenEvents {
     data class OnGameNameChanged(val value: String) : NewGameScreenEvents
     data class OnMaxPointsChanged(val value: String) : NewGameScreenEvents
     object OnSaveNewPlayer : NewGameScreenEvents
-    data class OnCreateGame(val onSuccess: () -> Unit) : NewGameScreenEvents
+    object OnCreateGame : NewGameScreenEvents
     data class OnRemovePlayerClick(val player: Player) : NewGameScreenEvents
+    object OnNavigateBack : NewGameScreenEvents
 }

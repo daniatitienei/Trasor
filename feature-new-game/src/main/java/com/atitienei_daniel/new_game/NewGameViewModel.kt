@@ -5,9 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.atitienei_daniel.core_data.repository.GameRepository
 import com.atitienei_daniel.core_model.Game
 import com.atitienei_daniel.core_model.Player
+import com.atitienei_daniel.core_navigation.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,6 +21,10 @@ class NewGameViewModel @Inject constructor(
 
     private var _uiState = MutableStateFlow(NewGameScreenState())
     val uiState = _uiState.asStateFlow()
+
+    private val _uiEvent = Channel<UiEvent>()
+    val uiEvent = _uiEvent.consumeAsFlow()
+
     fun onEvent(event: NewGameScreenEvents) {
         when (event) {
             is NewGameScreenEvents.OnNewPlayerNameChanged -> {
@@ -42,6 +49,7 @@ class NewGameViewModel @Inject constructor(
                     )
                     return
                 }
+
                 clearPlayerNameError()
 
                 val newPlayersList = _uiState.value.players.toMutableList()
@@ -80,7 +88,7 @@ class NewGameViewModel @Inject constructor(
                             )
                         )
                     }
-                    event.onSuccess()
+                    sendEvent(UiEvent.PopBackStack)
                 }
             }
             is NewGameScreenEvents.OnRemovePlayerClick -> {
@@ -92,6 +100,15 @@ class NewGameViewModel @Inject constructor(
                     players = newPlayersList
                 )
             }
+            NewGameScreenEvents.OnNavigateBack -> {
+                sendEvent(UiEvent.PopBackStack)
+            }
+        }
+    }
+
+    private fun sendEvent(event: UiEvent) {
+        viewModelScope.launch {
+            _uiEvent.send(event)
         }
     }
 
