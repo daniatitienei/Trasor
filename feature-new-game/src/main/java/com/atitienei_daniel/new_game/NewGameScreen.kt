@@ -74,7 +74,6 @@ fun NewGameRoute(
     val focusRequester = remember {
         FocusRequester()
     }
-    val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(key1 = Unit) {
         viewModel.uiEvent.collect { uiEvent ->
@@ -85,11 +84,6 @@ fun NewGameRoute(
                 else -> Unit
             }
         }
-    }
-
-    LaunchedEffect(key1 = Unit) {
-        focusRequester.requestFocus()
-        keyboardController?.show()
     }
 
     LaunchedEffect(
@@ -197,9 +191,7 @@ fun NewGameScreen(
                                 Text(text = stringResource(R.string.game_name_placeholder))
                             },
                             shape = RoundedCornerShape(corner = CornerSize(10.dp)),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .focusRequester(focusRequester),
+                            modifier = Modifier.fillMaxWidth(),
                             keyboardOptions = KeyboardOptions(
                                 imeAction = ImeAction.Next,
                                 capitalization = KeyboardCapitalization.Sentences
@@ -253,7 +245,6 @@ fun NewGameScreen(
                         keyboardActions = KeyboardActions(
                             onDone = {
                                 coroutineScope.launch {
-
                                     modalBottomSheetState.show()
                                 }
                             }
