@@ -18,6 +18,7 @@ import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.material.icons.rounded.Stop
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,8 +31,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.atitienei_daniel.core_designsystem.theme.TrasorTheme
 import com.atitienei_daniel.core_model.Game
 import com.atitienei_daniel.core_model.previewGame
+import com.atitienei_daniel.core_navigation.UiEvent
 import com.atitienei_daniel.core_ui.WinnerCard
 import com.atitienei_daniel.feature_update_game.R
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun UpdateGameRoute(
@@ -40,27 +43,25 @@ fun UpdateGameRoute(
 ) {
     val game by viewModel.game.collectAsStateWithLifecycle(Game())
 
-    BackHandler(
-        onBack = {
-            if (game.winner != null) {
-                viewModel.onEvent(UpdateGameScreenEvents.OnEndGame(game))
-                onBackClick()
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { uiEvent ->
+            when (uiEvent) {
+                is UiEvent.PopBackStack -> onBackClick()
+                else -> Unit
             }
         }
-    )
+    }
 
     UpdateGameScreen(
         game = game,
         onEvent = viewModel::onEvent,
-        onBackClick = onBackClick
     )
 }
 
 @Composable
 fun UpdateGameScreen(
     game: Game,
-    onEvent: (UpdateGameScreenEvents) -> Unit,
-    onBackClick: () -> Unit,
+    onEvent: (UpdateGameScreenEvents) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -71,10 +72,7 @@ fun UpdateGameScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            if (game.winner != null) {
-                                onEvent(UpdateGameScreenEvents.OnEndGame(game))
-                            }
-                            onBackClick()
+                            onEvent(UpdateGameScreenEvents.OnNavigateBack)
                         }
                     ) {
                         Icon(
@@ -88,8 +86,7 @@ fun UpdateGameScreen(
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = {
-                    onEvent(UpdateGameScreenEvents.OnEndGame(game))
-                    onBackClick()
+                    onEvent(UpdateGameScreenEvents.OnEndGame)
                 },
                 text = {
                     Text(text = stringResource(id = R.string.end_game))
@@ -137,10 +134,10 @@ fun UpdateGameScreen(
                 PlayerCard(
                     player = player,
                     increaseScore = {
-                        onEvent(UpdateGameScreenEvents.OnIncreasePlayerScore(game, player))
+                        onEvent(UpdateGameScreenEvents.OnIncreasePlayerScore(player))
                     },
                     decreaseScore = {
-                        onEvent(UpdateGameScreenEvents.OnDecreasePlayerScore(game, player))
+                        onEvent(UpdateGameScreenEvents.OnDecreasePlayerScore(player))
                     }
                 )
             }
@@ -152,6 +149,6 @@ fun UpdateGameScreen(
 @Composable
 fun UpdateGameScreenPreview() {
     TrasorTheme {
-        UpdateGameScreen(game = previewGame, onEvent = {}, onBackClick = {})
+        UpdateGameScreen(game = previewGame, onEvent = {})
     }
 }

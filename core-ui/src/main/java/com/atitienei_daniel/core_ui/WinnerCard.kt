@@ -22,12 +22,11 @@ import com.atitienei_daniel.core_model.previewPlayer
 
 @Composable
 fun WinnerCard(player: Player) {
-    Card(
-        onClick = { /*TODO*/ }
-    ) {
+    Card {
         Text(
             text = stringResource(id = R.string.winner) + " \uD83D\uDC51",
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
+            style = MaterialTheme.typography.titleLarge
         )
         ListItem(
             headlineText = {

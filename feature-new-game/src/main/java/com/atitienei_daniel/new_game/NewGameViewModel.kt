@@ -11,6 +11,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +24,7 @@ class NewGameViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     private val _uiEvent = Channel<UiEvent>()
-    val uiEvent = _uiEvent.consumeAsFlow()
+    val uiEvent = _uiEvent.receiveAsFlow()
 
     fun onEvent(event: NewGameScreenEvents) {
         when (event) {
@@ -100,7 +101,7 @@ class NewGameViewModel @Inject constructor(
                     players = newPlayersList
                 )
             }
-            NewGameScreenEvents.OnNavigateBack -> {
+            is NewGameScreenEvents.OnNavigateBack -> {
                 sendEvent(UiEvent.PopBackStack)
             }
         }

@@ -1,5 +1,6 @@
 package com.atitienei_daniel.core_data.repository
 
+import android.util.Log
 import com.atitienei_daniel.core_data.model.asEntity
 import com.atitienei_daniel.core_database.dao.GameDao
 import com.atitienei_daniel.core_database.model.GameEntity
@@ -37,9 +38,16 @@ class GameRepositoryImpl @Inject constructor(
     }
 
     override suspend fun increasePlayerScore(game: Game, player: Player) {
+        game.maxScore?.let { maxScore ->
+            if (player.score == maxScore) {
+                return
+            }
+        }
+
         val playerWithScoreUpdated = player.copy(
             score = player.score + 1
         )
+
         val players = game.players.toMutableList().map {
             if (it.name == player.name) {
                 playerWithScoreUpdated
@@ -82,11 +90,15 @@ class GameRepositoryImpl @Inject constructor(
             }
         }
 
-        latestGameDatastore.updateLatestGame(
-            game = game.copy(
-                winner = winner
-            )
+        val gameWithWinner = game.copy(
+            winner = winner,
+            finished = true
         )
-        deleteGame(game.id)
+
+        updateGame(gameWithWinner)
+
+        latestGameDatastore.updateLatestGame(
+            game = gameWithWinner
+        )
     }
 }
