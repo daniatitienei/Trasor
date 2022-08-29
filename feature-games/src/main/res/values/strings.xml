@@ -5,4 +5,7 @@
     <string name="unfinished_games">Unfinished games</string>
     <string name="no_games_started">No games started</string>
     <string name="app_name">Trasor</string>
+    <string name="winner">Winner</string>
+    <string name="players">Players</string>
+    <string name="finished_games">Finished games</string>
 </resources>

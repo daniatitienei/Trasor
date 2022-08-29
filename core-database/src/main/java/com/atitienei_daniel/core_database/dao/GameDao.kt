@@ -16,9 +16,9 @@ interface GameDao {
 
     @Query(
         """
-        SELECT * FROM GAME
-        WHERE id = :gameId
-    """
+            SELECT * FROM GAME
+            WHERE id = :gameId
+        """
     )
     fun getGameEntityStream(gameId: Int): Flow<GameEntity>
 
@@ -31,7 +31,7 @@ interface GameDao {
     @Query(
         value = """
             DELETE FROM GAME
-            WHERE id in (:gameId)
+            WHERE id = :gameId
         """
     )
     suspend fun deleteGame(gameId: Int)
