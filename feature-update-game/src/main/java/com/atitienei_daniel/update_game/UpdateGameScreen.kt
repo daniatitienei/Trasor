@@ -72,7 +72,7 @@ fun UpdateGameScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-
+                            onEvent(UpdateGameScreenEvents.OnNavigateBack)
                         }
                     ) {
                         Icon(

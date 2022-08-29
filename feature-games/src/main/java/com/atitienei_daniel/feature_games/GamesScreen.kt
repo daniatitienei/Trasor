@@ -75,8 +75,8 @@ fun GamesScreen(
     latestGame: Game?,
     onEvent: (GameScreenEvents) -> Unit
 ) {
-    val finishedGames = games.filter { it.winner != null }
-    val unFinishedGames = games.filter { it.winner == null }
+    val finishedGames = games.filter { it.finished }
+    val unFinishedGames = games.filter { !it.finished }
 
     Scaffold(
         topBar = {
@@ -125,46 +125,48 @@ fun GamesScreen(
                 }
             }
             item {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .animateContentSize(tween(200))
-                        .clickable {
-                            onEvent(GameScreenEvents.ToggleFinishedGamesCard)
-                        },
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
+                AnimatedVisibility(visible = finishedGames.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .animateContentSize(tween(200))
+                            .clickable {
+                                onEvent(GameScreenEvents.ToggleFinishedGamesCard)
+                            },
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        Box(
-                            modifier = Modifier.weight(1f),
-                            contentAlignment = Alignment.CenterStart
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                text = stringResource(id = R.string.finished_games),
-                                style = MaterialTheme.typography.titleLarge,
-                            )
-                        }
-                        Box(
-                            modifier = Modifier.weight(1f),
-                            contentAlignment = Alignment.CenterEnd
-                        ) {
-                            IconButton(
-                                onClick = { onEvent(GameScreenEvents.ToggleFinishedGamesCard) }
+                            Box(
+                                modifier = Modifier.weight(1f),
+                                contentAlignment = Alignment.CenterStart
                             ) {
-                                Icon(
-                                    imageVector = if (!uiState.isFinishedGamesCardExpanded) Icons.Rounded.KeyboardArrowDown else Icons.Rounded.KeyboardArrowUp,
-                                    contentDescription = null
+                                Text(
+                                    text = stringResource(id = R.string.finished_games),
+                                    style = MaterialTheme.typography.titleLarge,
                                 )
                             }
+                            Box(
+                                modifier = Modifier.weight(1f),
+                                contentAlignment = Alignment.CenterEnd
+                            ) {
+                                IconButton(
+                                    onClick = { onEvent(GameScreenEvents.ToggleFinishedGamesCard) }
+                                ) {
+                                    Icon(
+                                        imageVector = if (!uiState.isFinishedGamesCardExpanded) Icons.Rounded.KeyboardArrowDown else Icons.Rounded.KeyboardArrowUp,
+                                        contentDescription = null
+                                    )
+                                }
+                            }
                         }
-                    }
 
-                    if (uiState.isFinishedGamesCardExpanded) {
-                        finishedGames.forEach {
-                            FinishedGameCard(game = it)
+                        if (uiState.isFinishedGamesCardExpanded) {
+                            finishedGames.forEach {
+                                FinishedGameCard(game = it)
+                            }
                         }
                     }
                 }
@@ -193,7 +195,6 @@ fun GamesScreen(
         }
     }
 }
-
 
 
 @Preview

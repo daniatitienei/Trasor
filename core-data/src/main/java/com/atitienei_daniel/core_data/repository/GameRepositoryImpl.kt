@@ -91,7 +91,8 @@ class GameRepositoryImpl @Inject constructor(
         }
 
         val gameWithWinner = game.copy(
-            winner = winner
+            winner = winner,
+            finished = true
         )
 
         updateGame(gameWithWinner)

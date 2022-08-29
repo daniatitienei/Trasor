@@ -101,7 +101,7 @@ class NewGameViewModel @Inject constructor(
                     players = newPlayersList
                 )
             }
-            NewGameScreenEvents.OnNavigateBack -> {
+            is NewGameScreenEvents.OnNavigateBack -> {
                 sendEvent(UiEvent.PopBackStack)
             }
         }

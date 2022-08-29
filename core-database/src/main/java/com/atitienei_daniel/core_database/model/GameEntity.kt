@@ -15,7 +15,7 @@ data class GameEntity(
     val players: List<PlayerEntity>,
     val maxScore: Int?,
     val finished: Boolean,
-    val winner: PlayerEntity?
+    val winner: PlayerEntity?,
 )
 
 fun GameEntity.asExternalModel() = Game(
