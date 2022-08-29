@@ -10,6 +10,9 @@ The purpose of this repository is to demonstrate below:
 ## 📷 Previews
 
 ---
+![Screenshot_20220828_120011](https://user-images.githubusercontent.com/62098466/187286788-139fbbbf-2386-449d-a4fa-e53d0adaaf12.png)
+![Screenshot_20220828_115707](https://user-images.githubusercontent.com/62098466/187286797-4b13d56f-f893-4623-9ad5-ba5cda880c8b.png)
+![Screenshot_20220828_121313](https://user-images.githubusercontent.com/62098466/187286805-775548da-e0eb-4055-b40c-6ca630c0e866.png)
 
 []()
 
